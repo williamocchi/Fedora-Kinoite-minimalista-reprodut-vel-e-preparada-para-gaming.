@@ -3,20 +3,34 @@
 
 name: fedora-kinoite-cachyos
 
-description: Fedora Kinoite minimalista com KDE Plasma e kernel CachyOS.
+description: Fedora Kinoite minimalista com foco em performance e diagnóstico de hardware
 
 base-image: ghcr.io/ublue-os/kinoite-main
 image-version: latest
 
 modules:
 
-  - type: files
-    files:
-      - source: system
-        destination: /
-
+  # ------------------------------------------------------------
+  # Ferramentas de diagnóstico de hardware
+  #
+  # lspci    -> pciutils
+  # lsusb    -> usbutils
+  # sensors  -> lm_sensors
+  # smartctl -> smartmontools
+  # inxi     -> inxi
+  # btop     -> monitoramento em tempo real
+  # ------------------------------------------------------------
   - type: dnf
     install:
-      packages: []
+      packages:
+        - pciutils
+        - usbutils
+        - lm_sensors
+        - smartmontools
+        - inxi
+        - btop
 
-  - type: signing  
+  # ------------------------------------------------------------
+  # Assinatura da imagem
+  # ------------------------------------------------------------
+  - type: signing
